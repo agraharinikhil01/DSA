@@ -1,5 +1,4 @@
 class Solution {
-    // Nikhil
     public int removeDuplicates(int[] nums) {
         int i = 0;
 
