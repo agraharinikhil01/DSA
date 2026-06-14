@@ -1,37 +1,46 @@
-class Solution {
-    public List<String> generateParenthesis(int n) {
-         List<String> result = new ArrayList<>();
+import java.util.*;
 
-        backtrack(result, "", 0, 0, n);
+class Solution {
+
+    public List<String> generateParenthesis(int n) {
+
+        List<String> result = new ArrayList<>();
+
+        generate("", 2 * n, result);
 
         return result;
     }
 
-    public void backtrack(List<String> result,
-                          String current,
-                          int open,
-                          int close,
-                          int n) {
+    public void generate(String current, int maxLength,
+                         List<String> result) {
 
-        if (current.length() == 2 * n) {
-            result.add(current);
+        if (current.length() == maxLength) {
+
+            if (isValid(current)) {
+                result.add(current);
+            }
             return;
         }
 
-        if (open < n) {
-            backtrack(result,
-                     current + "(",
-                     open + 1,
-                     close,
-                     n);
+        generate(current + "(", maxLength, result);
+        generate(current + ")", maxLength, result);
+    }
+
+    public boolean isValid(String s) {
+
+        int count = 0;
+
+        for (char ch : s.toCharArray()) {
+
+            if (ch == '(')
+                count++;
+            else
+                count--;
+
+            if (count < 0)
+                return false;
         }
 
-        if (close < open) {
-            backtrack(result,
-                     current + ")",
-                     open,
-                     close + 1,
-                     n);
-        }
+        return count == 0;
     }
 }
